@@ -32,6 +32,14 @@ def add_song (e):
     
     # Add song to songbox
     song_box.insert(END, song)
+def add_many_songs (e):
+    songs = filedialog.askopenfilenames(initialdir = "Musics/", title = "Choose Songs", filetypes = (("mp3 Files", "*.mp3"), ("All Files", "*.*")))
+    for song in songs:
+        song = song.replace("C:/Users/huawei/Documents/GitHub/Lipbir-Music-Player/Musics/", "")
+        song = song.replace(".mp3", "")
+        
+        song_box.insert(END, song)
+        
     
 # Define Play functions
 def play (e):
@@ -97,10 +105,14 @@ root.config(menu = my_menu)
 # Add add Songs menu
 add_song_menu = Menu(my_menu, tearoff = False)
 my_menu.add_cascade(label = "Add Musics", menu = add_song_menu)
-add_song_menu.add_command(label = "Add One Music To Playlist", command = lambda: add_song(False))
+add_song_menu.add_command(label = "Add One Music To Playlist", command = lambda: add_song(False), accelerator= "Ctrl + O")
+add_song_menu.add_command(label = "Add Many Musics To Playlist", command = lambda: add_many_songs(False), accelerator= "Ctrl + Shift + O")
+
 
 # Bindings
 root.bind("<Return>", play)
 root.bind("<Control-o>", add_song)
+root.bind("<Control-O>", add_many_songs)
+
 
 root.mainloop()
