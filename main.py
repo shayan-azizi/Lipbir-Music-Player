@@ -53,6 +53,41 @@ def play (e):
 def stop (e):
     pygame.mixer.music.stop()
     song_box.selection_clear(ACTIVE)
+    
+# Define Forward functions
+def next_song (e):
+    next_one = song_box.curselection()
+    next_one = next_one [0] + 1
+    song =  song_box.get(next_one)
+    
+    song = f'C:/Users/huawei/Documents/GitHub/Lipbir-Music-Player/Musics/{song}.mp3'
+    
+    pygame.mixer.music.load(song)
+    pygame.mixer.music.play(loops= 0)
+    
+    song_box.select_clear(0, END)
+    
+    song_box.activate(next_one)
+    
+    song_box.select_set(next_one, last = None)
+    
+# Define Back functions
+def previous_song (e):
+    next_one = song_box.curselection()
+    next_one = next_one [0] - 1
+    song =  song_box.get(next_one)
+    
+    song = f'C:/Users/huawei/Documents/GitHub/Lipbir-Music-Player/Musics/{song}.mp3'
+    
+    pygame.mixer.music.load(song)
+    pygame.mixer.music.play(loops= 0)
+    
+    song_box.select_clear(0, END)
+    
+    song_box.activate(next_one)
+    
+    song_box.select_set(next_one, last = None)
+    
 
 
 # Define Paise functions
@@ -86,8 +121,8 @@ controls_frame.pack()
 
 
 # Create player control buttons
-back_button = Button(controls_frame, image =back_btn_img, borderwidth = 0)
-forward_button = Button(controls_frame, image =forward_btn_img, borderwidth = 0)
+back_button = Button(controls_frame, image =back_btn_img, borderwidth = 0, command = lambda: previous_song(False))
+forward_button = Button(controls_frame, image =forward_btn_img, borderwidth = 0, command = lambda: next_song(False))
 play_button = Button(controls_frame, image =play_btn_img, borderwidth = 0, command =lambda: play(False))
 pause_button = Button(controls_frame, image =pause_btn_img, borderwidth = 0, command = lambda: pause(False, paused))
 stop_button = Button(controls_frame, image =stop_btn_img, borderwidth = 0, command =lambda: stop(False))
