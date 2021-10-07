@@ -103,6 +103,17 @@ def pause (e, is_paused):
     else:
         pygame.mixer.music.pause()
         paused = True
+        
+# Define delete song functions
+def del_song (e):
+    song_box.delete(ANCHOR)
+    pygame.mixer.music.stop()
+
+# Define delete all songs functions
+def del_all_songs ():
+    song_box.delete(0, END)
+    pygame.mixer.music.stop()
+    
 
 # Create Playlist
 song_box = Listbox(root, bg = "lightblue", fg = "black", width = 60, selectbackground = "gray", selectforeground = "white")
@@ -137,17 +148,29 @@ stop_button.grid(row = 0, column =5, padx = 7)
 my_menu = Menu(root)
 root.config(menu = my_menu)
 
-# Add add Songs menu
+#  Create Add Songs menu
 add_song_menu = Menu(my_menu, tearoff = False)
 my_menu.add_cascade(label = "Add Musics", menu = add_song_menu)
 add_song_menu.add_command(label = "Add One Music To Playlist", command = lambda: add_song(False), accelerator= "Ctrl + O")
 add_song_menu.add_command(label = "Add Many Musics To Playlist", command = lambda: add_many_songs(False), accelerator= "Ctrl + Shift + O")
+
+# Create Delete Songs menu
+remove_song_menu = Menu(my_menu, tearoff = False)
+my_menu.add_cascade(label = "Remove Musics", menu = remove_song_menu)
+remove_song_menu.add_command(label = "Delete Music", command = lambda: del_song(False), accelerator= "Del")
+remove_song_menu.add_command(label = "Delete All Musics", command = del_all_songs)
+
+
 
 
 # Bindings
 root.bind("<Return>", play)
 root.bind("<Control-o>", add_song)
 root.bind("<Control-O>", add_many_songs)
+root.bind("<Delete>", del_song)
+root.bind("<BackSpace>", del_song)
+
+
 
 
 root.mainloop()
